@@ -7,6 +7,7 @@ from io import BytesIO
 import base64
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from django.db.models import Sum
 
 
 
@@ -98,3 +99,41 @@ def plotData(request):
     # Pass the base64-encoded image to the template context
     context = {'image': image_base64}
     return render(request, 'plot.html', context)
+
+def plotDataBar(request):
+    companies = Company.objects.all()
+    company_list = []
+    salary_list = []
+   
+    for company in companies:
+        candidates = Candidates.objects.filter(company=company)
+        total_salary = Company.objects.aggregate(Sum('salary'))['salary__sum'] or 0
+
+        company_list.append(company.name)
+        salary_list.append(total_salary)
+    
+    print(company_list, salary_list)
+    fig = Figure()
+    ax = fig.add_subplot()
+    
+    ax.bar(company_list, salary_list)
+    ax.set_xlabel('Company', fontsize=10)
+    ax.set_ylabel('Total Salary', fontsize=10)
+    ax.set_title('Total Salary by Company', fontsize=16)
+    ax.set_xticklabels(company_list, rotation=20, ha='right')
+
+
+    
+    
+
+    buffer = BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    image_base64 = base64.b64encode(image_png).decode('utf-8')
+
+    # Pass the base64-encoded image to the template context
+    context = {'image': image_base64}
+    return render(request, 'plot.html', context)
+    
