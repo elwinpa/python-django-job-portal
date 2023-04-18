@@ -85,9 +85,10 @@ def plotData(request):
     print(name_list,countList)
     fig = Figure()
     ax = fig.add_subplot()
-    
-    ax.pie(countList, labels=name_list, autopct='%1.1f%%')
-    
+
+    label_counts = [f"{label} ({count})" for label, count in zip(name_list, countList)]
+
+    ax.pie(countList, labels=label_counts)
 
     buffer = BytesIO()
     fig.savefig(buffer, format='png')
@@ -102,25 +103,18 @@ def plotData(request):
 
 def plotDataBar(request):
     companies = Company.objects.all()
-    company_list = []
-    salary_list = []
-   
-    for company in companies:
-        candidates = Candidates.objects.filter(company=company)
-        total_salary = Company.objects.aggregate(Sum('salary'))['salary__sum'] or 0
-
-        company_list.append(company.name)
-        salary_list.append(total_salary)
-    
-    print(company_list, salary_list)
+    name_values = companies.values_list('name', flat=True)
+    name_list = list(name_values)
+    salary_values = companies.values_list('salary', flat=True)
+    salary_list = list(salary_values)
     fig = Figure()
     ax = fig.add_subplot()
     
-    ax.bar(company_list, salary_list)
+    ax.bar(name_list, salary_list)
     ax.set_xlabel('Company', fontsize=10)
     ax.set_ylabel('Total Salary', fontsize=10)
     ax.set_title('Total Salary by Company', fontsize=16)
-    ax.set_xticklabels(company_list, rotation=20, ha='right')
+    ax.set_xticklabels(name_list, rotation=20, ha='right')
 
 
     
