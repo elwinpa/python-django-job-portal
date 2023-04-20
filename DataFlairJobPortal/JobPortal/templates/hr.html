@@ -2,6 +2,8 @@
 {% load static%}
 
 {% block content %}
+<script src="https://kit.fontawesome.com/c940cf0420.js" crossorigin="anonymous"></script>
+
 <div class="container card">
     <h1>Candidates applied</h1>
     <div class="card-body">
@@ -13,6 +15,7 @@
                 <th>Gender</th>
                 <th>Mobile</th>
                 <th>Email</th>
+                <th>Action</th>
             </tr>
             {% for c in candidates %}
                 <tr>
@@ -26,6 +29,7 @@
                     <td>{{c.gender}}</td>
                     <td>{{c.mobile}}</td>
                     <td>{{c.email}}</td>
+                    <td><a href="{% url 'delete' c.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></td>
                 </tr>
             {% endfor %}
         </table>

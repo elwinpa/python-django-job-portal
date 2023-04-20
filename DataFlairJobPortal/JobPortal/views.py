@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
@@ -157,3 +157,9 @@ def applyFilter(request):
 
     context = {'companies': companies, 'query': True}
     return render(request, 'Jobseeker.html', context) 
+
+
+def delete(request, pk):
+    candidate = get_object_or_404(Candidates, pk=pk)
+    candidate.delete()
+    return redirect('home')

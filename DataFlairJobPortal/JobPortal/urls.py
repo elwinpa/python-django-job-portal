@@ -11,5 +11,7 @@ urlpatterns = [
     path('apply/',applyPage,name='apply'),
     path('search/',search,name='search'),
     path('applyfilter/',applyFilter,name='applyfilter'),
+    path('delete/<int:pk>/', delete, name='delete'),
+    
     
 ]
