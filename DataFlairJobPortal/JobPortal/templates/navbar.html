@@ -5,8 +5,10 @@
         text-decoration: none;
       }
     </style>
+    <script src="https://kit.fontawesome.com/c940cf0420.js" crossorigin="anonymous"></script>
   </head>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: slateblue;">
+      <i class="fa-solid fa-house" style="color: #f1f2f3; margin-right: 10px; margin-left: 20px;"></i>
       <a class="navbar-brand" href="{% url 'home' %}">HOME</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -20,7 +22,7 @@
       <span class="user">Hello, {{request.user}}  &nbsp;</span>
       <span ><a  class="user btn btn-info" href ="{% url 'logout' %}"> Logout</a></span>
       {% else %}
-          <span ><a class="user" href="{% url 'login' %}">Login</a></span>>
-          <span ><a class="user" href="{% url 'register' %}">Register</a></span>>
+          <span ><a class="user" style=" margin-right: 10px; margin-left: 20px;" href="{% url 'login' %}">Login</a></span>
+          <span ><a class="user" style=" margin-right: 25px; margin-left: 20px;"  href="{% url 'register' %}">Register</a></span>
       {% endif  %}
     </nav>

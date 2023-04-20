@@ -5,10 +5,39 @@
 <head>
     <style>
         .maindiv{
-            border:1px solid black;
+            
+            border: 1px solid orangered;
+            box-shadow: 0px 0px 10px rgba(229, 151, 77, 0.3);
+            width: 60%;
+        }
+        h1 {
+            color: rebeccapurple;
+            padding-left: 20px;
+            padding-top: 15px;
+            font-family: ui-monospace;
+            text-align: center;
+        }
+        label {
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        input{
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        }
+
+        .helptext {
+        font-size: 14px;
+        color: #666;
         }
     </style>
 </head>
+<h1>Register</h1>
 <div class="maindiv jumbotron container">
 
     <form method="POST"  action="">
@@ -16,7 +45,8 @@
         {{form.as_p}}
         {{registerForm.as_p}}
         <input class="btn btn-success btn-lg" type="submit" value="Register">
-        <p>Already have an account<a href='{% url "login" %}'>Login</a></p>
+        <p style=" text-align: center; padding-top: 10px;">Already have an account ?<a style="padding-left: 5px;" href='{% url "login" %}'>Login</a></p>
+
     </form>
 
 </div>

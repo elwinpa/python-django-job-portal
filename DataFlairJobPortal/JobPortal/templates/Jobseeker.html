@@ -10,6 +10,7 @@
             border: 1px solid orangered;
             border-radius: 8px;
             margin-bottom: 50px;
+            box-shadow: 0px 0px 10px rgba(229, 151, 77, 0.3);
         }
         .searchField{
             border-radius: 8px;
@@ -23,6 +24,16 @@
         .jobseeker{
             display: flex;
         }
+        h1 {
+            color: rebeccapurple;
+            padding-left: 20px;
+            padding-top: 15px;
+            font-family: ui-monospace;
+        }
+        .btn-info{
+            background-color: #42abeb;
+            border-color: #42abeb;
+        }
     </style>
 </head>
 <div class="jobseeker">
@@ -30,7 +41,7 @@
 <div class="sidenav">
 <form class="searchForm" method="get" action="{% url 'search' %}">
     <input class="searchField" type="text" name="q" placeholder="Search...">
-    <button class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Search</button>
+    <button class="btn btn-success btn-sm" style="margin-top: 10px;" type="submit">Search</button>
 </form>
 <form class="searchForm" method="get" action="{% url 'applyfilter' %}">
     <label for="position">Position:</label>
@@ -51,11 +62,11 @@
     <input class="searchField" type="number" name="max_salary" id="max_salary">
     <br>
   
-    <button class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Apply Filters</button>
+    <button class="btn btn-success btn-sm" style="margin-top: 10px;" type="submit">Apply Filters</button>
   </form>
   <div class="searchForm"  style="display: flex; flex-direction: column;"> 
-        <a href="{% url 'plot' %}" class="btn btn-info btn-sm" type="submit">Candidates Chart</a>
-        <a href="{% url 'plotbar' %}" class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Salary Chart</a>
+        <a href="{% url 'plot' %}" class="btn btn-success btn-sm" type="submit">Candidates Chart</a>
+        <a href="{% url 'plotbar' %}" class="btn btn-success btn-sm" style="margin-top: 10px;" type="submit">Salary Chart</a>
     </div>
 </div>
 {% endif  %}
@@ -63,7 +74,7 @@
     {% if query %}
     <h1>Search Results</h1>
     {% else %}
-    <h1>Available openings</h1>
+    <h1>Job Listings</h1>
     {% endif  %}
     <div class="card-body">
         <table class="table table-hover">
@@ -84,7 +95,7 @@
                     <td>{{c.salary}}</td>
                     <td>{{c.experience}}</td>
                     <td>{{c.Location}}</td>
-                    <td><a href="{% url 'apply' %}" class="btn btn-info btn-sm" type="submit">Apply</a></td>
+                    <td><a href="{% url 'apply' %}" class="btn btn-success btn-info" type="submit">Apply</a></td>
                 </tr>
             {% endfor %}
         </table>
