@@ -2,12 +2,69 @@
 {% load static%}
 
 {% block content %}
-<div class="container card">
-    <h1>Available openings</h1>
-    <div style="display:flex; justify-content: end";> 
-        <a href="{% url 'plot' %}" class="btn btn-info btn-sm" type="submit">View Pie Chart</a>
-        <a href="{% url 'plotbar' %}" class="btn btn-info btn-sm" type="submit">View Bar Chart</a>
+<head>
+    <style>
+        .searchForm{
+            text-align: center;
+            padding: 15px;
+            border: 1px solid orangered;
+            border-radius: 8px;
+            margin-bottom: 50px;
+        }
+        .searchField{
+            border-radius: 8px;
+            border-color: slateblue;
+        }
+        .sidenav{
+            padding: 0 20px;
+            width: 20%;
+            margin-top: 1px;
+        }
+        .jobseeker{
+            display: flex;
+        }
+    </style>
+</head>
+<div class="jobseeker">
+{% if not query %}
+<div class="sidenav">
+<form class="searchForm" method="get" action="{% url 'search' %}">
+    <input class="searchField" type="text" name="q" placeholder="Search...">
+    <button class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Search</button>
+</form>
+<form class="searchForm" method="get" action="{% url 'applyfilter' %}">
+    <label for="position">Position:</label>
+    <br>
+    <select class="searchField" name="position" id="position">
+      <option value="">--Select a position--</option>
+      {% for position in positions %}
+        <option value="{{ position }}">{{ position }}</option>
+      {% endfor %}
+    </select>
+    <br>
+  
+    <label style="margin-top: 10px;" for="min_salary">Minimum Salary:</label>
+    <input class="searchField" type="number" name="min_salary" id="min_salary">
+    <br>
+  
+    <label for="max_salary">Maximum Salary:</label>
+    <input class="searchField" type="number" name="max_salary" id="max_salary">
+    <br>
+  
+    <button class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Apply Filters</button>
+  </form>
+  <div class="searchForm"  style="display: flex; flex-direction: column;"> 
+        <a href="{% url 'plot' %}" class="btn btn-info btn-sm" type="submit">Candidates Chart</a>
+        <a href="{% url 'plotbar' %}" class="btn btn-info btn-sm" style="margin-top: 10px;" type="submit">Salary Chart</a>
     </div>
+</div>
+{% endif  %}
+<div class="container card">
+    {% if query %}
+    <h1>Search Results</h1>
+    {% else %}
+    <h1>Available openings</h1>
+    {% endif  %}
     <div class="card-body">
         <table class="table table-hover">
             <tr>
@@ -33,7 +90,6 @@
         </table>
     </div>
 </div>
-        {% for c in companies %}
-            {{c.name}}
-        {% endfor %}
+</div>
+        
 {% endblock %}

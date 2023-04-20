@@ -20,8 +20,10 @@ def home(request):
         return render(request,'hr.html',context)
     else:
         companies=Company.objects.all()
+        positions = set(Company.objects.values_list('position', flat=True))
         context={
             'companies':companies,
+            'positions': positions
         }
         return render(request,'Jobseeker.html',context)
 
@@ -128,6 +130,30 @@ def plotDataBar(request):
     image_base64 = base64.b64encode(image_png).decode('utf-8')
 
     # Pass the base64-encoded image to the template context
-    context = {'image': image_base64}
+    context = {'image': image_base64, 'salary': True}
     return render(request, 'plot.html', context)
-    
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        searchComp = Company.objects.filter(name__icontains=query) 
+    else:
+        searchComp = []
+    context = {'companies': searchComp, 'query': query}
+    return render(request, 'Jobseeker.html', context)
+
+def applyFilter(request):
+    min_salary = request.GET.get('min_salary')
+    max_salary = request.GET.get('max_salary')
+    position = request.GET.get('position')
+    companies = Company.objects.all()
+
+    if min_salary:
+        companies = companies.filter(salary__gte=min_salary)
+    if max_salary:
+        companies = companies.filter(salary__lte=max_salary)
+    if position:
+        companies = companies.filter(position__iexact=position)
+
+    context = {'companies': companies, 'query': True}
+    return render(request, 'Jobseeker.html', context) 
