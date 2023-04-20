@@ -9,5 +9,7 @@ urlpatterns = [
     path('plotbar/',plotDataBar, name='plotbar'),
     path('register/',registerUser,name='register'),
     path('apply/',applyPage,name='apply'),
+    path('search/',search,name='search'),
+    path('applyfilter/',applyFilter,name='applyfilter'),
     
 ]
